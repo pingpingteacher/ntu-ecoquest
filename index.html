@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07110f">
-<title>微光思辨｜十五分之一的農場</title>
+<title>臺大生態探索｜NTU EcoQuest</title>
 <style>
 :root{--bg:#06100d;--bg2:#0b1b15;--panel:#10251d;--panel2:#173229;--text:#f5f5ec;--muted:#a9bbb1;--line:#2d4a40;--glow:#eef7a9;--glow2:#c9df73;--warm:#f1e6a7;--orange:#e6a36e;--shadow:rgba(0,0,0,.38)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -159,7 +159,7 @@ function buzz(){try{if(navigator.vibrate)navigator.vibrate(24)}catch(e){}}
 function choose(q,a,next){s.answers[q]=a;buzz();s.history.push(s.page);s.page=next;save();render()}
 function pageTop(title,n){return `<div class="top"><button class="back" onclick="back()">← 上一步</button><div class="mid">${title}</div><div class="num">${n?String(n).padStart(2,"0")+" / 06":""}</div></div>${n?`<div class="bar"><i style="width:${n/6*100}%"></i></div>`:""}`}
 function cta(label,next,disabled=false){return `<div class="cta"><button class="primary" ${disabled?"disabled":""} onclick="${disabled?"":`nav('${next}')`}">${label}</button></div>`}
-function interviewVideo(stem,label){return `<figure class="interview"><figcaption>${label}</figcaption><video class="memvideo" controls playsinline preload="none" poster="assets/videos/${stem}.jpg" src="assets/videos/${stem}.mp4?v=7" aria-label="${label}"></video><p class="video-note">點選播放訪談，也可以直接繼續探索。</p></figure>`}
+function interviewVideo(stem,label){return `<figure class="interview"><figcaption>${label}</figcaption><video class="memvideo" controls controlslist="nodownload" playsinline preload="none" poster="assets/videos/${stem}.jpg" src="assets/videos/${stem}.mp4?v=7" aria-label="${label}"></video><p class="video-note">點選播放訪談，也可以直接繼續探索。</p></figure>`}
 function exhibit(n,title,artist,work,body,q,next,cls,vid){return `<section class="screen">${pageTop(title,n)}${vid?interviewVideo(vid[0],vid[1]):`<div class="visual ${cls}"><div><div class="eyebrow">展場介紹</div><strong>${artist}</strong><br>${work}</div></div>`}<h2>${artist}</h2><h3>${work}</h3><p>${body}</p><div class="quote">${q}</div>${cta("把這個問題帶進農場 →",next)}</section>`}
 function feedback(q,title,n,question,action,next,extra=""){const a=s.answers[q],f=fb[q][a];return `<section class="screen">${pageTop(title,n)}<div class="feedback"><h3>${f[0]}</h3><p>${f[1]}</p></div>${extra?`<p class="muted">${extra}</p>`:""}<div class="bigq">${question}</div><span class="action">${action}</span>${cta(n===6?"完成六關 →":"下一關 →",next)}</section>`}
 function scoreResult(){const score={};Object.keys(roles).forEach(k=>score[k]=0);["q1","q2","q3","q4","q5","q6"].forEach(q=>{const a=s.answers[q];if(!a)return;Object.entries(scoring[q][a]).forEach(([k,v])=>score[k]+=v)});let mx=Math.max(...Object.values(score)),t=Object.keys(score).filter(k=>score[k]===mx);if(t.length>1){for(const q of ["q6","q5","q4","q3"]){const a=s.answers[q];if(!a)continue;const m=scoring[q][a]||{};const lm=Math.max(...t.map(k=>m[k]||0));const nt=t.filter(k=>(m[k]||0)===lm);if(nt.length<t.length)t=nt;if(t.length===1)break}}return t[0]}
@@ -259,7 +259,7 @@ async function submitRaffle(){
 }
 
 function render(){document.querySelectorAll('video').forEach(v=>v.pause());let h='';switch(s.page){
-case'home':h=`<section class="screen">${fireflies()}<div class="hero"><div class="eyebrow">臺大百晝之夜 × 夜訪農場</div><div class="glow"></div><h1>微光思辨</h1><h3>十五分之一的農場</h3><p class="muted">六個關卡，六次行動。<br>不是答題，而是做出你的選擇。</p><div class="pills"><span class="pill">剪</span><span class="pill">照</span><span class="pill">拖</span><span class="pill">挖</span><span class="pill">導演</span><span class="pill">寄出</span></div></div><div class="cta"><button class="primary" onclick="nav('intro')">開始夜訪 →</button>${Object.keys(s.answers).length?`<button class="secondary" onclick="reset()">重新開始</button>`:''}</div></section>`;break;
+case'home':h=`<section class="screen">${fireflies()}<div class="hero"><div class="eyebrow">臺大百晝之夜 × 夜訪農場</div><div class="glow"></div><h1>臺大生態探索</h1><p class="muted" lang="en">NTU EcoQuest</p><h3>微光思辨｜十五分之一的農場</h3><p class="muted">六個關卡，六次行動。<br>不是答題，而是做出你的選擇。</p><div class="pills"><span class="pill">剪</span><span class="pill">照</span><span class="pill">拖</span><span class="pill">挖</span><span class="pill">導演</span><span class="pill">寄出</span></div></div><div class="cta"><button class="primary" onclick="nav('intro')">開始夜訪 →</button>${Object.keys(s.answers).length?`<button class="secondary" onclick="reset()">重新開始</button>`:''}</div></section>`;break;
 case'intro':h=`<section class="screen">${pageTop('遊戲說明',0)}<h2>微光思辨——城市的存在與不存在＿教育推廣</h2><p class="muted">策展人：賴以平、林書帆</p>${interviewVideo('00-game-design','教育推廣組｜賴以平、林書帆')}<div class="hero"><h2>你會經過六個關卡</h2><p>每一關從百晝之夜的策展內容出發，再把其中的問題轉譯到臺大農場與城市生態。</p><div class="card"><p>你會真的動手：剪掉一個節點、移動聚光燈、拖動時間、挖掘痕跡、安排舞台、寄一張明信片。</p></div><div class="quote">沒有正確答案。系統只記錄：今晚，你怎麼看這座農場。</div></div>${cta('進入第一個展場 →','q1ex')}</section>`;break;
 case'q1ex':h=exhibit(1,'第一關｜共同編織','郭子萱（代表受訪）、陳玟錡、李宥辰','《當記憶織成一片樹蔭》','作品從文學院中庭曾經的印度黃檀出發，透過竹構、舊衣布條、手寫故事與編織，讓分散在不同人身上的日常記憶重新連在一起。它不是複製一棵消失的樹，而是共同撐起一片新的記憶樹蔭。','如果少掉其中一條線，整體還會一樣嗎？','q1game','lines',['01-guo-zixuan','郭子萱（代表受訪）｜當記憶織成一片樹蔭']);break;
 case'q1game':h=q1Game();break;
@@ -307,6 +307,12 @@ default:s.page='home';save();return render()}
 document.getElementById('app').innerHTML=h;document.querySelectorAll('video').forEach(v=>{v.addEventListener('play',()=>document.querySelectorAll('video').forEach(other=>{if(other!==v)other.pause()}));v.addEventListener('error',()=>{const note=v.parentElement.querySelector('.video-note');if(note)note.textContent='影片暫時無法播放，仍可繼續閱讀與遊戲。'});});window.scrollTo({top:0,behavior:'instant'})}
 render();
 </script>
-<script src="assets/i18n.js?v=20261106-terms2"></script>
+<script src="assets/i18n.js?v=20261106-ecoquest"></script>
+<script>
+// Hide the standard download entry points; public media URLs remain accessible.
+document.addEventListener('contextmenu', function (event) {
+  if (event.target instanceof HTMLVideoElement) event.preventDefault();
+});
+</script>
 </body>
 </html>
