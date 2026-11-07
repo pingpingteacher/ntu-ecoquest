@@ -307,7 +307,7 @@ default:s.page='home';save();return render()}
 document.getElementById('app').innerHTML=h;document.querySelectorAll('video').forEach(v=>{v.addEventListener('play',()=>document.querySelectorAll('video').forEach(other=>{if(other!==v)other.pause()}));v.addEventListener('error',()=>{const note=v.parentElement.querySelector('.video-note');if(note)note.textContent='影片暫時無法播放，仍可繼續閱讀與遊戲。'});});window.scrollTo({top:0,behavior:'instant'})}
 render();
 </script>
-<script src="assets/i18n.js?v=20261106-cycle"></script>
+<script src="assets/i18n.js?v=20261107-review"></script>
 <script>
 // Hide the standard download entry points; public media URLs remain accessible.
 document.addEventListener('contextmenu', function (event) {
